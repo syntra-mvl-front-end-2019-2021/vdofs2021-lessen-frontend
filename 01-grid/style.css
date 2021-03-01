@@ -1,0 +1,100 @@
+.grid {
+  display: grid;
+  grid-auto-flow: dense;
+  grid-template-columns: repeat(2, 55px) [content-start] auto 50px[content-end] 40px;
+  grid-template-rows: 25% [content-row-start] auto [content-row-end footer-start] 100px [footer-end];
+  height: 500px;
+}
+
+.grid * {
+  color: white;
+  font-size: 3rem;
+  background-color: goldenrod;
+  border: 2px solid darkgoldenrod;
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+}
+
+.grid-item-1 {
+  grid-column-start: 2;
+  grid-column-end: 5;
+  grid-row-start: 2;
+  grid-row-end: 4;
+  background-color: green;
+}
+
+.span-two-cols {
+  grid-column: span 2;
+  background-color: orangered;
+}
+
+.content-one {
+  grid-column-start: content-start;
+  grid-column-end: content-end;
+  grid-row-start: content-row-start;
+  grid-row-end: content-row-end;
+  background-color: dodgerblue;
+}
+
+.full-width {
+  grid-column: 1 / span 5;
+  background-color: deeppink;
+}
+
+.grid-two {
+  height: 750px;
+  display: none;
+  grid-template-columns: 75px 50px 300px 50px 75px;
+  grid-template-rows: 50px 1fr 1fr 50px;
+  grid-template-areas:
+    "header header header header header"
+    "sidebar-left content content content sidebar-right"
+    "sidebar-left content content content sidebar-right"
+    "footer footer footer footer footer";
+
+  column-gap: 10px;
+  row-gap: 6px;
+  justify-content: center;
+}
+
+@media screen and (max-width: 750px) {
+  .grid-two {
+    grid-template-columns: 75px 2fr 75px;
+    grid-template-rows: 50px 1fr 1fr 50px;
+    grid-template-areas:
+    "header header header"
+    "sidebar-right content sidebar-left"
+    "sidebar-right content sidebar-left"
+    "footer footer footer";
+
+    gap: 4px 6px;
+  }
+}
+
+.grid-two * {
+  background-color: darkslategrey;
+  border: 5px solid darkkhaki;
+  box-sizing: border-box;
+}
+
+.footer {
+  grid-area: footer;
+  background-color: mediumpurple;
+}
+.sidebar-left {
+  grid-area: sidebar-left;
+  background-color: darkmagenta;
+}
+.sidebar-right {
+  grid-area: sidebar-right;
+  background-color: darkcyan;
+}
+.content {
+  grid-area: content;
+  background-color: yellow;
+}
+.header {
+  grid-area: header;
+  background-color: green;
+}
