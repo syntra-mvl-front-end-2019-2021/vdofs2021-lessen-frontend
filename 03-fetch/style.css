@@ -1,0 +1,8 @@
+#pagination,
+#btn-container {
+    text-align: center;
+}
+
+#pagination button {
+    background-color: goldenrod;
+}
