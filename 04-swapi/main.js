@@ -49,7 +49,9 @@ function printResource(resource) {
     });
 }
 
-function printDetails(data) {
+
+
+function printDetails($btn, data) {
     $details.innerHTML = '';
 
     const promiseArray = [];
@@ -62,6 +64,24 @@ function printDetails(data) {
                         return [key, body.name];
                     }),
                 );
+                break;
+            case 'starships':
+            case 'pilots':
+            case 'residents':
+            case 'people':
+            case 'films':
+            case 'vehicles':
+            case 'species':
+            case 'planets':
+            case 'characters':
+                const characterArray = data[key].map(function(url) {
+                    return fetchResource(url).then(function (body) {
+                        return body.name ? body.name : body.title;
+                    });
+                });
+                promiseArray.push(Promise.all(characterArray).then(function(nameArray) {
+                    return [key, nameArray.join(', ')];
+                }));
                 break;
             case 'url':
                 break;
@@ -90,9 +110,11 @@ function printDetails(data) {
                 return result.status === 'fulfilled';
             })
             .forEach(function (result) {
-                const template = `<p><strong>${result.value[0]}:</strong> ${result.value[1]}</p>`;
+                const template = `<p><strong>${result.value[0]}:</strong> ${result.value[1] ? result.value[1] : '/'}</p>`;
                 $details.insertAdjacentHTML('beforeend', template);
             });
+
+        $btn.classList.remove('loading');
     });
 }
 
@@ -138,9 +160,7 @@ function resourceDetailsBtnClicked(event) {
     if (event.target.matches('.details-btn')) {
         event.target.classList.add('loading');
         fetchResource(event.target.dataset.url).then(function (body) {
-            console.log(body);
-            printDetails(body);
-            event.target.classList.remove('loading');
+            printDetails(event.target, body);
         });
     }
 }
