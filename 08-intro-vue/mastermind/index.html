@@ -20,9 +20,9 @@
                 <div id="history-container">
                     <div v-for="guessItem in guessHistory" class="history-item">
                         <p class="result-row">
-                            <span v-for="index in guessItem.code"
-                                >{{colorArray[index]}}</span
-                            >
+                            <span v-for="index in guessItem.code">
+                                {{colorArray[index]}}
+                            </span>
                         </p>
                         <p>{{guessItem.correctPlaceCount}} kleuren juist</p>
                         <p>
