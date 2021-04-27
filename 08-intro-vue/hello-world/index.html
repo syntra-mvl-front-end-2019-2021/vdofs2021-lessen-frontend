@@ -19,6 +19,10 @@
                 <a v-bind:href="link" target="_blank">saepe</a> sunt!
             </p>
 
+            <button @click="toggleFiltered">
+                Only short {{ filtered? '(on)' : '(off)'}}
+            </button>
+
             <div>
                 <label>
                     Question:
@@ -31,7 +35,7 @@
                 <button @click="saveFaq">Save</button>
             </div>
 
-            <div v-for="(faq, index) in faqs">
+            <div v-for="(faq, index) in filteredFaqs">
                 <button
                     class="accordeon-toggle"
                     @click="toggleAccordeon(index)"

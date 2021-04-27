@@ -6,6 +6,7 @@ const app = new Vue({
             link: 'https://google.com',
             newQuestion: '',
             newAnswer: '',
+            filtered: false,
             faqs: [
                 {
                     question: 'test1?',
@@ -15,23 +16,35 @@ const app = new Vue({
                 },
                 {
                     question: 'test2?',
-                    answer: 'test test test.',
+                    answer: 'test test tesasdt.',
                     open: false,
                 },
                 {
                     question: 'test3?',
-                    answer: 'test test test.',
+                    answer: 'tedsst test test.',
                     open: false,
                 },
                 {
                     question: 'test4?',
-                    answer: 'test test test.',
+                    answer: 'tesasdfgaert test test.',
                     open: false,
                 },
             ],
         };
     },
+    computed: {
+        filteredFaqs() {
+            if (this.filtered) {
+                return this.faqs.filter((val) => val.answer.length < 20);
+            }
+
+            return this.faqs;
+        },
+    },
     methods: {
+        toggleFiltered() {
+            this.filtered = !this.filtered;
+        },
         toggleAccordeon(index) {
             this.faqs[index].open = !this.faqs[index].open;
         },

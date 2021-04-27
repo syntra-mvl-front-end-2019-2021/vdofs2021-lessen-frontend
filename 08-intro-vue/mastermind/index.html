@@ -11,7 +11,7 @@
         <main id="app">
             <div id="mastermind">
                 <p id="ai-code" :class="{'result-row': true, hide: !gameOver}">
-                    <span v-for="index in solution">{{colorArray[index]}}</span>
+                    <span v-for="color in solutionColors">{{color}}</span>
                 </p>
                 <h2 v-if="gameOver" id="message">
                     {{won ? 'You won' : 'You lost, try again'}}

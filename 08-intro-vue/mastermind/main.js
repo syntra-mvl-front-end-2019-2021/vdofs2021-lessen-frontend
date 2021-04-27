@@ -21,6 +21,11 @@ const app = new Vue({
             guessHistory: [],
         };
     },
+    computed: {
+        solutionColors() {
+            return this.solution.map((val) => this.colorArray[val]);
+        },
+    },
     created() {
         this.initGameState();
     },
