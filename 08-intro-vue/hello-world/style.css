@@ -1,0 +1,23 @@
+body {
+    font-family: sans-serif;
+}
+
+.accordeon-toggle {
+    margin-top: 2rem;
+    display: block;
+    width: 100%;
+    background-color: goldenrod;
+    color: whitesmoke;
+    border-radius: 0;
+    outline: none;
+    border: none;
+    padding: 0.5rem 2rem;
+    font-weight: bold;
+    font-size: 1.5rem;
+    cursor: pointer;
+}
+
+.accordeon-content {
+    padding: 2rem;
+    border: 2px solid goldenrod;
+}
