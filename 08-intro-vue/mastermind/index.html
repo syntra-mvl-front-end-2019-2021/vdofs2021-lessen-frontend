@@ -8,48 +8,60 @@
     </head>
     <body>
         <h1>Mastermind game!</h1>
-        <main>
+        <main id="app">
             <div id="mastermind">
-                <p id="ai-code" class="result-row hide">
-                    <span>wit</span> <span>oranje</span> <span>rood</span>
-                    <span>paars</span> <span>blauw</span> <span>blauw</span>
+                <p id="ai-code" :class="{'result-row': true, hide: !gameOver}">
+                    <span v-for="index in solution">{{colorArray[index]}}</span>
                 </p>
-                <h2 id="message"></h2>
+                <h2 v-if="gameOver" id="message">
+                    {{won ? 'You won' : 'You lost, try again'}}
+                </h2>
 
                 <div id="history-container">
-                    <div class="history-item">
+                    <div v-for="guessItem in guessHistory" class="history-item">
                         <p class="result-row">
-                            <span>wit</span> <span>oranje</span>
-                            <span>rood</span> <span>paars</span>
-                            <span>blauw</span> <span>blauw</span>
+                            <span v-for="index in guessItem.code"
+                                >{{colorArray[index]}}</span
+                            >
                         </p>
-                        <p>2 kleuren juist</p>
-                        <p>2 kleuren juist maar op de foute plaats</p>
+                        <p>{{guessItem.correctPlaceCount}} kleuren juist</p>
+                        <p>
+                            {{guessItem.correctCount}} kleuren juist maar op de
+                            foute plaats
+                        </p>
                     </div>
                 </div>
             </div>
 
-            <div id="game-btn-container">
+            <div id="game-btn-container" :class="{'do-not-show': gameOver}">
                 <h3>Give a code.</h3>
                 <p id="guess-input" class="result-row">
-                    <span>wit</span> <span>oranje</span> <span>rood</span>
+                    <span v-for="index in currentGuess">
+                        {{colorArray[index]}}
+                    </span>
                 </p>
                 <div class="btn-container" id="btn-container">
-                    <button data-index="0" class="select-btn">wit</button>
-                    <button data-index="1" class="select-btn">geel</button>
-                    <button data-index="2" class="select-btn">oranje</button>
-                    <button data-index="3" class="select-btn">rood</button>
-                    <button data-index="4" class="select-btn">paars</button>
-                    <button data-index="5" class="select-btn">blauw</button>
-                    <button data-index="6" class="select-btn">groen</button>
+                    <button
+                        v-for="(color, index) in colorArray"
+                        @click="addColor(index)"
+                        class="select-btn"
+                    >
+                        {{color}}
+                    </button>
                 </div>
                 <div class="btn-container">
-                    <button class="select-btn" id="undo-btn">Undo</button>
-                    <button class="select-btn" id="submit-btn">Submit</button>
+                    <button @click="undo" class="select-btn" id="undo-btn">
+                        Undo
+                    </button>
+                    <button @click="submit" class="select-btn" id="submit-btn">
+                        Submit
+                    </button>
                 </div>
             </div>
-            <div id="restart-btn-container" class="do-not-show">
-                <button class="select-btn" id="restart">New Game</button>
+            <div id="restart-btn-container" :class="{'do-not-show': !gameOver}">
+                <button @click="initGameState" class="select-btn" id="restart">
+                    New Game
+                </button>
             </div>
         </main>
 
