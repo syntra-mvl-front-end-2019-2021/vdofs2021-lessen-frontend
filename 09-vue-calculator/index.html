@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta
+            name="viewport"
+            content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"
+        />
+        <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+        <title>Hello vue</title>
+        <link
+            rel="stylesheet"
+            href="https://cdn.jsdelivr.net/npm/water.css@2/out/dark.css"
+        />
+        <link rel="stylesheet" href="style.css" />
+    </head>
+    <body>
+        <div id="app">
+            <div class="display">
+                <div class="display__top">
+                    {{topDisplay}} <span>{{operator}}</span>
+                </div>
+                <div class="display__bottom">{{bottomDisplay}}</div>
+            </div>
+            <div class="inputs">
+                <div class="inputs__top">
+                    <button
+                        type="button"
+                        class="inputs__btn"
+                        @click="insertOperator(operator)"
+                        v-for="operator in topRowOperators"
+                        :key="operator"
+                    >
+                        {{operator}}
+                    </button>
+                </div>
+                <div class="inputs__right">
+                    <button
+                        type="button"
+                        class="inputs__btn"
+                        @click="insertOperator(operator)"
+                        v-for="operator in rightColOperators"
+                        :key="operator"
+                    >
+                        {{operator}}
+                    </button>
+                </div>
+                <div class="inputs__numbers">
+                    <button
+                        type="button"
+                        class="inputs__btn"
+                        v-for="number in 9"
+                        @click="insertNumber(number)"
+                    >
+                        {{number}}
+                    </button>
+                    <button
+                        type="button"
+                        class="inputs__btn"
+                        @click="insertOperator('+-')"
+                    >
+                        +/-
+                    </button>
+                    <button
+                        type="button"
+                        class="inputs__btn"
+                        @click="insertNumber(0)"
+                    >
+                        0
+                    </button>
+                    <button
+                        type="button"
+                        class="inputs__btn"
+                        @click="insertOperator('.')"
+                    >
+                        .
+                    </button>
+                </div>
+            </div>
+            <div class="history">
+                <p
+                    class="history__item"
+                    v-for="(historyItem, index) in history"
+                    :key="historyItem + index"
+                >
+                    {{historyItem}}
+                </p>
+            </div>
+        </div>
+
+        <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+        <script src="script.js"></script>
+    </body>
+</html>

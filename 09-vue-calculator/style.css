@@ -1,0 +1,91 @@
+.inputs {
+    grid-column: 1 / span 1;
+    grid-row: 2 / span 1;
+    display: grid;
+    grid-template-columns: repeat(4, 5rem);
+    grid-template-rows: repeat(5, 5rem);
+    grid-gap: 0.5rem;
+}
+.inputs__btn {
+    display: block;
+    height: 100%;
+    width: 100%;
+    font-size: 1.4rem;
+    padding: 0;
+}
+
+.inputs__btn--0 {
+    grid-column: 2;
+}
+
+.inputs__numbers {
+    display: grid;
+    grid-template-columns: repeat(3, 5rem);
+    grid-template-rows: repeat(4, 5rem);
+    grid-row: 2 / span 4;
+    grid-column: 1 / span 3;
+    grid-gap: 0.5rem;
+}
+
+.inputs__top {
+    display: grid;
+    grid-template-columns: repeat(4, 5rem);
+    grid-column: 1 / span 4;
+    grid-gap: 0.5rem;
+}
+
+.inputs__right {
+    display: grid;
+    grid-template-rows: repeat(4, 5rem);
+    grid-template-columns: 5rem;
+    grid-column: 4;
+    grid-row: 2 / span 4;
+    grid-gap: 0.5rem;
+}
+
+.display {
+    grid-column: 1 / span 1;
+    grid-row: 1 / span 1;
+    background-color: #fff;
+    width: 21.5rem;
+    height: 8.4rem;
+    border: 0.2rem solid #0096bfab;
+    text-align: right;
+    border-radius: 6px;
+    padding: 0 1rem;
+    color: black;
+    box-sizing: border-box;
+    margin-bottom: 0.5rem;
+}
+
+.display__top {
+    height: 3rem;
+    line-height: 3rem;
+}
+
+.display__bottom {
+    height: 5rem;
+    line-height: 5rem;
+    font-size: 1.4rem;
+    font-weight: bold;
+}
+
+.history {
+    grid-column: 2 / span 1;
+    grid-row: 1 / span 2;
+    background-color: #fff;
+    border-radius: 6px;
+    border: 0.2rem solid #0096bfab;
+    padding: 0 1rem;
+    color: black;
+    overflow-y: auto;
+    height: 100%;
+    box-sizing: border-box;
+}
+
+#app {
+    display: grid;
+    grid-template-columns: 21.5rem 15rem;
+    grid-template-rows: 8.4rem 27rem;
+    grid-gap: 0.5rem;
+}
