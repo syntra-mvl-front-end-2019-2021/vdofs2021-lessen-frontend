@@ -12,8 +12,67 @@
     </head>
     <body>
         <div id="app">
-            <button type="button" @click="fetchSudoku">Fetch</button>
-            <div v-for="(line,index) in sudoku" :key="index">{{line}}</div>
+            <div class="board">
+                <div
+                    :class="{
+                        'board__line': true,
+                    }"
+                    v-for="(line, lineIndex) in sudoku"
+                    :key="'line_' + lineIndex"
+                >
+                    <component
+                        v-for="(square, colIndex) in line"
+                        :is="checkFixedNumbers(colIndex, lineIndex) ? 'div': 'button'"
+                        :class="{
+                            board__square: true,
+                            'board__square--fixed': checkFixedNumbers(colIndex, lineIndex),
+                            'board__square--active': checkSquareActive(colIndex, lineIndex),
+                        }"
+                        :key="'square_' + colIndex + lineIndex"
+                        :type="checkFixedNumbers(colIndex, lineIndex) ? null : 'button'"
+                        @click="checkFixedNumbers(colIndex, lineIndex) ? null : squareClick(colIndex, lineIndex)"
+                    >
+                        {{square === 0 ? '' : square}}
+                    </component>
+                </div>
+            </div>
+
+            <div class="input-container">
+                <button
+                    type="button"
+                    class="input"
+                    v-for="num in 9"
+                    :key="'input_' + num"
+                    :disabled="!selectedSquare"
+                    @click="inputClick(num)"
+                >
+                    {{num}}
+                </button>
+                <button
+                    class="input input--delete"
+                    :disabled="!selectedSquare"
+                    type="button"
+                    @click="inputClick(0)"
+                >
+                    Clear
+                </button>
+                <button
+                    class="input input--check"
+                    type="button"
+                    @click="checkClick"
+                >
+                    Check
+                </button>
+                <button
+                    class="input input--solve"
+                    type="button"
+                    @click="solveClick"
+                >
+                    Solve
+                </button>
+            </div>
+
+            <div class="message">{{message}}</div>
         </div>
 
         <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>

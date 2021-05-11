@@ -1,0 +1,91 @@
+body {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: slategray;
+}
+
+.board {
+    display: grid;
+    grid-template-rows: 3rem 3rem 3.5rem 3rem 3rem 3.5rem 3rem 3rem 3rem;
+    grid-gap: 4px;
+}
+
+.board__line {
+    display: grid;
+    grid-template-columns: 3rem 3rem 3.5rem 3rem 3rem 3.5rem 3rem 3rem 3rem;
+    grid-gap: 4px;
+}
+
+.board__square {
+    box-sizing: border-box;
+    width: 3rem;
+    height: 3rem;
+    border: 1px solid darkslategray;
+    font-size: 2rem;
+    text-align: center;
+    line-height: 3rem;
+    background-color: whitesmoke;
+}
+
+.board__square--fixed {
+    background-color: darkslategray;
+    color: whitesmoke;
+}
+
+button.board__square {
+    cursor: pointer;
+}
+
+button.board__square:focus,
+button.board__square:hover {
+    box-shadow: 0 0 2px 1px darkslategray;
+    background-color: #9bcad9;
+}
+
+.board__square--active {
+    background-color: #c3d1d4;
+}
+
+.board__square--active.board__square--fixed {
+    background-color: #416c6c;
+}
+
+.input-container {
+    display: grid;
+    grid-template-columns: 3rem 3rem 3.5rem 3rem 3rem 3.5rem 3rem 3rem 3rem;
+    grid-gap: 4px;
+    grid-template-rows: repeat(2, 3rem);
+    padding-top: 3rem;
+}
+
+.input {
+    box-sizing: border-box;
+    width: 3rem;
+    height: 3rem;
+    display: block;
+    border: 1px solid darkslategray;
+    font-size: 2rem;
+    text-align: center;
+    line-height: 3rem;
+    background-color: whitesmoke;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+.input--delete {
+    grid-column: 1 / span 3;
+    width: calc(9rem + 8px);
+}
+
+.input--check {
+    grid-column: 4 / span 3;
+    width: calc(9rem + 8px);
+}
+
+.input--solve {
+    grid-column: 7 / span 3;
+    width: calc(9rem + 8px);
+}
