@@ -1,0 +1,42 @@
+.board {
+    display: grid;
+    grid-template-columns: repeat(7, 5rem);
+    border: 2px solid #1270cd;
+    width: 35rem;
+    margin: 0 auto;
+    cursor: pointer;
+}
+
+.board-col {
+    display: flex;
+    flex-direction: column-reverse;
+}
+
+.board-cell {
+    position: relative;
+    width: 5rem;
+    height: 5rem;
+    background-color: dodgerblue;
+    box-sizing: border-box;
+    border: 2px solid #1270cd;
+}
+
+.board-cell:after {
+    display: block;
+    content: '';
+    position: absolute;
+    top: 0.5rem;
+    left: 0.5rem;
+    right: 0.5rem;
+    bottom: 0.5rem;
+    border-radius: 50%;
+    background-color: white;
+}
+
+.board-cell--1:after {
+    background-color: yellow;
+}
+
+.board-cell--2:after {
+    background-color: red;
+}
