@@ -65,12 +65,19 @@ const app = new Vue({
             this.gameFull = false;
             this.turn = 1;
         },
+        inColorGroup(x, y) {
+            return (
+                [].concat(...this.colorGroups).filter((cell) => {
+                    return cell.co === '' + x + y;
+                }).length > 0
+            );
+        },
         initBoard() {
             const board = [];
             for (let x = 0; x < this.colCount; x++) {
                 const row = [];
                 for (let y = 0; y < this.rowCount; y++) {
-                    row.push(0);
+                    row.push({ co: '' + x + y, color: 0 });
                 }
                 board.push(row);
             }
@@ -86,7 +93,7 @@ const app = new Vue({
         checkGameFull() {
             return (
                 this.board
-                    .map((col) => col.filter((cell) => cell === 0))
+                    .map((col) => col.filter((cell) => cell.color === 0))
                     .filter((col) => col.length > 0).length === 0
             );
         },
@@ -104,7 +111,7 @@ const app = new Vue({
             // }, -1);
 
             for (let i = 0; i < col.length; i++) {
-                if (col[i] === 0) {
+                if (col[i].color === 0) {
                     return i;
                 }
             }
@@ -122,7 +129,8 @@ const app = new Vue({
                 return;
             }
 
-            selectedCol[firstEmptyIndex] = this.turn;
+            selectedCol[firstEmptyIndex].color = this.turn;
+
             Vue.set(this.board, colIndex, selectedCol);
 
             if (this.colorGroups.length > 0) {
@@ -162,13 +170,13 @@ const app = new Vue({
             const splitCol = [];
             for (let y = 0; y < arr.length; y++) {
                 const curCell = arr[y];
-                if (curCell === 0) {
+                if (curCell.color === 0) {
                 } else if (splitCol.length === 0) {
                     splitCol.push([curCell]);
                 } else {
                     const prevCell = arr[y - 1];
 
-                    if (curCell === prevCell) {
+                    if (curCell.color === prevCell.color) {
                         splitCol[splitCol.length - 1].push(curCell);
                     } else {
                         splitCol.push([curCell]);

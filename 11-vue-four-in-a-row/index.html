@@ -21,8 +21,8 @@
                         @click="colClicked(colIndex)"
                     >
                         <div
-                            :class="{'board-cell': true, ['board-cell--' + cell]: true}"
                             v-for="(cell, rowIndex) in col"
+                            :class="{'board-cell': true, ['board-cell--' + cell.color]: true, 'board-cell--winner': inColorGroup(colIndex, rowIndex)}"
                             :key="'row_' + rowIndex"
                         ></div>
                     </div>
