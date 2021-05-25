@@ -1,0 +1,65 @@
+.c-modal__background {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    justify-content: center;
+    align-items: center;
+}
+
+.c-modal--show {
+    display: flex;
+}
+
+.c-modal__window {
+    position: relative;
+    box-sizing: border-box;
+    background-color: #fff;
+    width: 90%;
+    max-width: 600px;
+    padding: 1rem;
+}
+
+.c-modal__title {
+    font-size: 3rem;
+    font-weight: 500;
+}
+
+.c-modal__close-btn {
+    position: absolute;
+    right: 1rem;
+    top: 1rem;
+    width: 1.5rem;
+    height: 1.5rem;
+    color: transparent;
+    background-color: darkslategray;
+    border-radius: 50%;
+    outline: none;
+    border: none;
+    cursor: pointer;
+}
+
+.c-modal__close-btn:after,
+.c-modal__close-btn:before {
+    content: '';
+    display: block;
+    width: 2px;
+    height: 14px;
+    background-color: #fff;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-top: -7px;
+    margin-left: -1px;
+}
+
+.c-modal__close-btn:after {
+    transform: rotate(45deg);
+}
+
+.c-modal__close-btn:before {
+    transform: rotate(-45deg);
+}
