@@ -1,17 +1,16 @@
 <template>
-    <div class="c-app"></div>
+    <div>
+        <Header />
+        <router-view />
+    </div>
 </template>
 
 <script>
+import Header from '@/components/Header';
 export default {
-    name: 'App',
-    components: {},
+    name: 'Root',
+    components: { Header },
 };
 </script>
 
-<style lang="scss">
-@import './assets/styles/imports/variables';
-
-.c-app {
-}
-</style>
+<style lang="scss"></style>
