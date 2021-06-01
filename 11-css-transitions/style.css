@@ -1,0 +1,82 @@
+html,
+body {
+    margin: 0;
+    padding: 0;
+}
+
+.transition {
+    height: 50px;
+    width: 50px;
+    margin: 1rem;
+    background-color: goldenrod;
+    transition: width 3s, background-color 2s linear 1s;
+}
+
+.transition--wide {
+    width: 500px;
+}
+
+.transition-1 {
+    transition-timing-function: linear;
+}
+
+.transition-1.transition--wide {
+    background-color: darkorange;
+}
+
+.transition-2 {
+    transition-timing-function: ease;
+}
+
+.transition-3 {
+    transition-timing-function: ease-in;
+}
+
+.transition-4 {
+    transition-timing-function: ease-out;
+}
+
+.transition-5 {
+    transition-timing-function: ease-in-out;
+}
+
+.transition-6 {
+    transition-timing-function: cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+header {
+    background-color: darkcyan;
+    padding: 2rem 4rem;
+}
+
+nav {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.nav-item {
+    position: relative;
+    display: block;
+    padding: 0.5rem 0.2rem;
+    margin: 0.8rem;
+    color: whitesmoke;
+    text-decoration: none;
+    font-family: sans-serif;
+}
+
+.nav-item:after {
+    content: '';
+    display: block;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    background-color: whitesmoke;
+    height: 2px;
+    transition: width 300ms ease-in-out;
+}
+
+.nav-item--active:after,
+.nav-item:hover:after {
+    width: 100%;
+}
