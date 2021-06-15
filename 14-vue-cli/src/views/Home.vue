@@ -1,12 +1,11 @@
 <template>
-    <div class="home">
-        <img alt="Vue logo" src="@/assets/logo.png" />
-    </div>
+    <div class="p-home"><Hero /></div>
 </template>
 
 <script>
+import Hero from '@/components/Hero';
 export default {
     name: 'Home',
-    components: {},
+    components: { Hero },
 };
 </script>
