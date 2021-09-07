@@ -12,10 +12,11 @@
             <component
                 v-for="(item, itemLabel) in items"
                 :key="label + '_' + itemLabel"
-                class="c-dropdown__item"
+                :class="{ 'c-dropdown__item': typeof item === 'string' }"
                 :is="typeof item === 'string' ? 'router-link' : 'SubDropdown'"
                 :to="typeof item === 'string' ? item : null"
                 :items="typeof item === 'string' ? null : item"
+                :id="typeof item === 'string' ? null : itemLabel"
             >
                 {{ itemLabel }}
             </component>
@@ -71,21 +72,22 @@ export default {
         font-size: 1.6rem;
         color: #35495e;
         font-weight: bold;
+        background-color: $header-bg-color;
     }
 
     &__items {
         position: absolute;
         display: flex;
         flex-direction: column;
-        max-height: 0;
-        overflow: hidden;
         top: 100%;
         right: 0;
+        transform: translateY(-100%);
         background-color: $header-bg-color;
-        transition: max-height linear 200ms;
+        z-index: -1;
+        transition: transform ease-in-out 200ms;
 
         &--open {
-            max-height: 15rem;
+            transform: translateY(0);
         }
     }
 
@@ -95,6 +97,8 @@ export default {
         min-width: max-content;
         font-weight: bold;
         color: $nav-color;
+        text-align: center;
+        text-decoration: none;
     }
 }
 </style>

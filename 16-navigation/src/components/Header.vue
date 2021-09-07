@@ -21,12 +21,19 @@ export default {
                     'Page Two': '/page-two',
                     'Page Three': '/page-three',
                     'Page Four': '/page-four',
+                    'More Other': {
+                        'Page Nine': '/page-nine',
+                        'Page Ten': '/page-ten',
+                        'Page Eleven': '/page-eleven',
+                        'Page Twelve': '/page-twelve',
+                    },
                 },
                 More: {
                     'Page Five': '/page-five',
                     'Page Six': '/page-six',
                     'Page Seven': '/page-seven',
                     'Page Eight': '/page-eight',
+                    'Page Nine': '/page-nine',
                 },
             },
         };

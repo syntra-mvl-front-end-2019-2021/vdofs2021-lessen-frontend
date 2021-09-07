@@ -36,11 +36,14 @@ export default {
     flex-grow: 1;
 
     &__item {
+        display: block;
         line-height: $header-height;
         padding: 0 2rem;
         font-size: 1.6rem;
         color: $nav-color;
         font-weight: bold;
+        text-decoration: none;
+        background-color: $header-bg-color;
     }
 }
 </style>
