@@ -1,14 +1,16 @@
 <template>
-    <div class="c-dropdown" @focusout="blur" :ref="'dropdown_' + label">
+    <div
+        :class="{
+            'c-dropdown': true,
+            'c-dropdown--open': open,
+        }"
+        @focusout="blur"
+        :ref="'dropdown_' + label"
+    >
         <span class="c-dropdown__label" tabindex="0" @focus="focus">
             {{ label }}
         </span>
-        <div
-            :class="{
-                'c-dropdown__items': true,
-                'c-dropdown__items--open': open,
-            }"
-        >
+        <div class="c-dropdown__items">
             <component
                 v-for="(item, itemLabel) in items"
                 :key="label + '_' + itemLabel"
@@ -73,6 +75,22 @@ export default {
         color: #35495e;
         font-weight: bold;
         background-color: $header-bg-color;
+        cursor: pointer;
+
+        &:after {
+            display: block;
+            content: '';
+            position: absolute;
+            width: 0px;
+            height: 0px;
+            right: 0;
+            top: 50%;
+            margin-top: -5px;
+            border-style: solid;
+            border-width: 10px 7px 0 7px;
+            border-color: $nav-color transparent transparent;
+            transition: transform 200ms linear;
+        }
     }
 
     &__items {
@@ -85,10 +103,6 @@ export default {
         background-color: $header-bg-color;
         z-index: -1;
         transition: transform ease-in-out 200ms;
-
-        &--open {
-            transform: translateY(0);
-        }
     }
 
     &__item {
@@ -99,6 +113,18 @@ export default {
         color: $nav-color;
         text-align: center;
         text-decoration: none;
+    }
+
+    &--open {
+        .c-dropdown {
+            &__label:after {
+                transform: rotate(180deg);
+            }
+
+            &__items {
+                transform: translateY(0);
+            }
+        }
     }
 }
 </style>

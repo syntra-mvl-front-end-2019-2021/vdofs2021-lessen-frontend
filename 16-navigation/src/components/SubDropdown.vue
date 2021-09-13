@@ -65,6 +65,7 @@ export default {
         min-width: max-content;
         font-weight: bold;
         color: $nav-color;
+        cursor: pointer;
     }
 
     &__items {

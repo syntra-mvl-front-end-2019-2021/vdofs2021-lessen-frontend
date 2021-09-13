@@ -34,6 +34,7 @@ export default {
     display: flex;
     justify-content: flex-end;
     flex-grow: 1;
+    padding-right: 2rem;
 
     &__item {
         display: block;
