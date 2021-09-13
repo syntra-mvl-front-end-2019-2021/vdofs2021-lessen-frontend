@@ -8,16 +8,22 @@
             class="c-autocomplete__input"
             v-bind="context.attributes"
             type="text"
-            @keydown="input"
+            @input="input"
             v-model="term"
             autocomplete="no"
             @blur="blur"
+            @keydown.enter.prevent="select(options[selectIndex])"
+            @keydown.down="next"
+            @keydown.up="prev"
         />
         <div class="c-autocomplete__results" ref="autocomplete-results">
             <button
-                v-for="option in options"
+                v-for="(option, index) in options"
                 :key="option.name"
-                class="c-autocomplete__result"
+                :class="{
+                    'c-autocomplete__result': true,
+                    'c-autocomplete__result--active': selectIndex === index,
+                }"
                 @click="select(option)"
             >
                 {{ option.name }}
@@ -41,6 +47,7 @@ export default {
             term: '',
             options: [],
             selected: null,
+            selectIndex: null,
         };
     },
     watch: {
@@ -85,10 +92,30 @@ export default {
             this.options = [];
             this.context.model = item.url;
         },
+        next() {
+            if (this.selectIndex === null) {
+                this.selectIndex = 0;
+                return;
+            }
+
+            if (this.selectIndex === this.options.length - 1) {
+                return;
+            }
+
+            this.selectIndex++;
+        },
+        prev() {
+            if (this.selectIndex === 0) {
+                this.selectIndex = null;
+            }
+
+            this.selectIndex--;
+        },
         input() {
             this.selected = null;
             this.options = [];
             this.context.model = '';
+            this.selectIndex = null;
 
             clearTimeout(this.timeOut);
 
@@ -135,6 +162,21 @@ export default {
         right: 0;
         display: flex;
         flex-direction: column;
+    }
+
+    &__result {
+        background-color: white;
+        border: none;
+        outline: none;
+        border-radius: 0;
+        color: black;
+        font-size: 1rem;
+        line-height: 1.4rem;
+        border: solid 1px cornflowerblue;
+
+        &--active {
+            background-color: goldenrod;
+        }
     }
 }
 </style>
