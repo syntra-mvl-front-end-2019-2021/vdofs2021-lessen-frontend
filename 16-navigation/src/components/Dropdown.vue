@@ -107,7 +107,7 @@ export default {
 
     &__item {
         font-size: 1.5rem;
-        padding: 0.6rem 1rem;
+        padding: 0.6rem 1.5rem;
         min-width: max-content;
         font-weight: bold;
         color: $nav-color;
