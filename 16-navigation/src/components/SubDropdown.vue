@@ -7,7 +7,12 @@
         @focusout="blur"
         :ref="'subdropdown_' + id"
     >
-        <span class="c-subdropdown__label" tabindex="0" @focus="focus">
+        <span
+            class="c-subdropdown__label"
+            tabindex="0"
+            @focus="focus"
+            :ref="'subdropdown_label_' + id"
+        >
             <slot />
         </span>
         <div class="c-subdropdown__items">
@@ -36,6 +41,12 @@ export default {
             required: true,
         },
     },
+    created() {
+        this.$root.$on('close-dropdown', this.doBlur);
+    },
+    destroyed() {
+        this.$root.$off('close-dropdown', this.doBlur);
+    },
     data() {
         return {
             open: false,
@@ -51,6 +62,9 @@ export default {
                 return;
             }
             this.open = false;
+        },
+        doBlur() {
+            this.$refs['subdropdown_label_' + this.id].blur();
         },
     },
 };
@@ -68,13 +82,17 @@ export default {
         font-weight: bold;
         color: $nav-color;
         cursor: pointer;
+        position: relative;
+        @media screen and (max-width: 600px) {
+            padding-left: 3rem;
+        }
 
         &:after {
             display: block;
             content: '';
             position: absolute;
-            width: 0px;
-            height: 0px;
+            width: 0;
+            height: 0;
             left: 2px;
             top: 50%;
             margin-top: -5px;
@@ -82,6 +100,14 @@ export default {
             border-width: 5px 8px 5px 0;
             border-color: transparent $nav-color transparent transparent;
             transition: transform 200ms linear;
+
+            @media screen and (max-width: 600px) {
+                right: 0;
+                left: unset;
+                margin-top: -5px;
+                border-width: 10px 7px 0 7px;
+                border-color: $nav-color transparent transparent;
+            }
         }
     }
 
@@ -95,6 +121,11 @@ export default {
         max-height: 0;
         transition: max-height linear 100ms;
         overflow: hidden;
+
+        @media screen and (max-width: 600px) {
+            position: static;
+            max-height: unset;
+        }
 
         &--open {
             max-height: 15rem;
@@ -110,12 +141,21 @@ export default {
         color: $nav-color;
         text-align: center;
         text-decoration: none;
+
+        @media screen and (max-width: 600px) {
+            text-align: left;
+            padding-left: 4.5rem;
+        }
     }
 
     &--open {
         .c-subdropdown {
             &__label:after {
                 transform: rotate(180deg);
+
+                @media screen and (max-width: 600px) {
+                    transform: unset;
+                }
             }
 
             &__items {

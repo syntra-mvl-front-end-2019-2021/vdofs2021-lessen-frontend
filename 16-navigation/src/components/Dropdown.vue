@@ -7,7 +7,12 @@
         @focusout="blur"
         :ref="'dropdown_' + label"
     >
-        <span class="c-dropdown__label" tabindex="0" @focus="focus">
+        <span
+            class="c-dropdown__label"
+            tabindex="0"
+            @focus="focus"
+            :ref="'dropdown_label_' + label"
+        >
             {{ label }}
         </span>
         <div class="c-dropdown__items">
@@ -41,6 +46,12 @@ export default {
             required: true,
         },
     },
+    created() {
+        this.$root.$on('close-dropdown', this.doBlur);
+    },
+    destroyed() {
+        this.$root.$off('close-dropdown', this.doBlur);
+    },
     data() {
         return {
             open: false,
@@ -56,6 +67,9 @@ export default {
                 return;
             }
             this.open = false;
+        },
+        doBlur() {
+            this.$refs['dropdown_label_' + this.label].blur();
         },
     },
 };
@@ -76,13 +90,18 @@ export default {
         font-weight: bold;
         background-color: $header-bg-color;
         cursor: pointer;
+        position: relative;
+
+        @media screen and (max-width: 600px) {
+            line-height: 3rem;
+        }
 
         &:after {
             display: block;
             content: '';
             position: absolute;
-            width: 0px;
-            height: 0px;
+            width: 0;
+            height: 0;
             right: 0;
             top: 50%;
             margin-top: -5px;
@@ -103,6 +122,11 @@ export default {
         background-color: $header-bg-color;
         z-index: -1;
         transition: transform ease-in-out 200ms;
+
+        @media screen and (max-width: 600px) {
+            position: static;
+            transform: unset;
+        }
     }
 
     &__item {
@@ -113,12 +137,22 @@ export default {
         color: $nav-color;
         text-align: center;
         text-decoration: none;
+        background-color: $header-bg-color;
+
+        @media screen and (max-width: 600px) {
+            text-align: left;
+            padding-left: 3rem;
+        }
     }
 
     &--open {
         .c-dropdown {
             &__label:after {
                 transform: rotate(180deg);
+
+                @media screen and (max-width: 600px) {
+                    transform: unset;
+                }
             }
 
             &__items {
