@@ -42,6 +42,14 @@
                     fourth: 'Fourth',
                 }"
             />
+            <FormulateInput
+                type="image"
+                name="headshot"
+                label="Select an image to upload"
+                help="Select a png, jpg or gif to upload."
+                validation="mime:image/jpeg,image/png,image/gif"
+                :uploader="uploadFile"
+            />
             <FormulateInput type="group" name="group" :repeatable="true">
                 <FormulateInput type="email" name="email" label="email" />
                 <FormulateInput type="text" name="name" label="name" />
@@ -84,6 +92,30 @@ export default {
                 group: [{ email: 'test123', name: 'test123' }],
             },
         };
+    },
+    methods: {
+        async uploadFile(file, progress, error, option) {
+            const formData = new FormData();
+            formData.append('img', file);
+
+            console.log({ file, progress, error, option });
+            fetch('https://e639-213-214-36-34.ngrok.io/api/save/img', {
+                method: 'POST',
+                body: formData,
+            })
+                .then((response) => {
+                    if (!response.ok) {
+                        throw new Error('could not upload');
+                    }
+                    return response.json();
+                })
+                .then((body) => {
+                    console.log(body);
+                })
+                .catch((e) => {
+                    console.error(e);
+                });
+        },
     },
 };
 </script>

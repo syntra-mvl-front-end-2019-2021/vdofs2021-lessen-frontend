@@ -52,29 +52,27 @@ export default {
     },
     watch: {
         'context.model': {
-            handler(newVal, oldVal) {
+            async handler(newVal, oldVal) {
                 console.log(newVal, oldVal);
 
                 if (this.selected || !newVal) {
                     return;
                 }
+                try {
+                    const response = await fetch(newVal);
 
-                fetch(newVal)
-                    .then((response) => {
-                        if (!response.ok) {
-                            throw new Error('could not fetch results');
-                        }
+                    if (!response.ok) {
+                        throw new Error('could not fetch results');
+                    }
 
-                        return response.json();
-                    })
-                    .then((body) => {
-                        console.log(body);
-                        this.selected = body;
-                        this.term = body.name;
-                    })
-                    .catch((e) => {
-                        console.error(e);
-                    });
+                    const body = await response.json();
+
+                    console.log(body);
+                    this.selected = body;
+                    this.term = body.name;
+                } catch (e) {
+                    console.error(e);
+                }
             },
             immediate: true,
         },
@@ -151,6 +149,7 @@ export default {
 <style lang="scss">
 .c-autocomplete {
     position: relative;
+
     &__input {
         box-sizing: border-box;
     }
