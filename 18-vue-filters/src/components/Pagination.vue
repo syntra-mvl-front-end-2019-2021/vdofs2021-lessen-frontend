@@ -22,10 +22,7 @@
         >
             {{ prevPage }}
         </button>
-        <button
-            class="c-pagination__item c-pagination__item--active"
-            @click="changePage(curPage)"
-        >
+        <button class="c-pagination__item c-pagination__item--active">
             {{ curPage }}
         </button>
         <button
@@ -42,7 +39,7 @@
         >
             {{ nextNextPage }}
         </button>
-        <span v-if="nextNextPage > totalPages - 3" class="c-pagination__spacer">
+        <span v-if="curPage < totalPages - 3" class="c-pagination__spacer">
             ...
         </span>
         <button
