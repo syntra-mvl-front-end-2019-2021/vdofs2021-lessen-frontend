@@ -1,7 +1,5 @@
 <template>
-    <article>
-        {{ comic.title }}
-    </article>
+    <article>{{ comic.title }}</article>
 </template>
 
 <script>

@@ -8,37 +8,39 @@
             1
         </button>
         <span v-if="prevPrevPage > 2" class="c-pagination__spacer">...</span>
-        <button
-            v-if="prevPrevPage"
-            class="c-pagination__item"
-            @click="changePage(prevPrevPage)"
-        >
-            {{ prevPrevPage }}
-        </button>
-        <button
-            v-if="prevPage"
-            class="c-pagination__item"
-            @click="changePage(prevPage)"
-        >
-            {{ prevPage }}
-        </button>
-        <button class="c-pagination__item c-pagination__item--active">
-            {{ curPage }}
-        </button>
-        <button
-            v-if="nextPage"
-            class="c-pagination__item"
-            @click="changePage(nextPage)"
-        >
-            {{ nextPage }}
-        </button>
-        <button
-            v-if="nextNextPage"
-            class="c-pagination__item"
-            @click="changePage(nextNextPage)"
-        >
-            {{ nextNextPage }}
-        </button>
+        <div>
+            <button
+                v-if="prevPrevPage"
+                class="c-pagination__item"
+                @click="changePage(prevPrevPage)"
+            >
+                {{ prevPrevPage }}
+            </button>
+            <button
+                v-if="prevPage"
+                class="c-pagination__item"
+                @click="changePage(prevPage)"
+            >
+                {{ prevPage }}
+            </button>
+            <button class="c-pagination__item c-pagination__item--active">
+                {{ curPage }}
+            </button>
+            <button
+                v-if="nextPage"
+                class="c-pagination__item"
+                @click="changePage(nextPage)"
+            >
+                {{ nextPage }}
+            </button>
+            <button
+                v-if="nextNextPage"
+                class="c-pagination__item"
+                @click="changePage(nextNextPage)"
+            >
+                {{ nextNextPage }}
+            </button>
+        </div>
         <span v-if="curPage < totalPages - 3" class="c-pagination__spacer">
             ...
         </span>
@@ -82,14 +84,14 @@ export default {
         },
 
         nextNextPage() {
-            if (this.curPage >= this.totalPages - 3) {
+            if (this.curPage >= this.totalPages - 2) {
                 return false;
             }
 
             return this.curPage + 2;
         },
         nextPage() {
-            if (this.curPage >= this.totalPages - 2) {
+            if (this.curPage >= this.totalPages - 1) {
                 return false;
             }
 
@@ -106,10 +108,16 @@ export default {
 
 <style lang="scss">
 .c-pagination {
-    padding: 2rem 0;
+    padding: 2rem 0 0;
     text-align: center;
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
 
     &__item {
+        padding-left: 1rem;
+        padding-right: 1rem;
+
         &:focus {
             box-shadow: none;
         }
@@ -121,10 +129,6 @@ export default {
                 background-color: darkgoldenrod;
             }
         }
-    }
-
-    &__spacer {
-        padding: 0 2rem;
     }
 }
 </style>

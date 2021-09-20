@@ -1,7 +1,11 @@
 <template>
     <div class="home">
         <aside class="home__aside">
-            <form @submit.prevent="setFilters">
+            <form
+                @submit.prevent="setFilters"
+                id="filter-form"
+                class="home__filter-form"
+            >
                 <label for="start">Van:</label>
                 <input
                     id="start"
@@ -17,12 +21,37 @@
                     v-model="filters.end"
                     :max="today"
                 />
-                <button type="submit" class="home__filter-submit">
-                    Filter
-                </button>
+
+                <div class="home__filter-creators">
+                    <div
+                        v-for="creator in creators"
+                        :key="'creator_' + creator.id"
+                    >
+                        <input
+                            :id="'creator_' + creator.id"
+                            type="checkbox"
+                            name="creators"
+                            :value="creator.id"
+                            v-model="filters.creators"
+                        />
+
+                        <label :for="'creator_' + creator.id">
+                            {{ creator.fullName }}
+                        </label>
+                    </div>
+                </div>
             </form>
+
+            <button
+                form="filter-form"
+                type="submit"
+                class="home__filter-submit"
+            >
+                Filter
+            </button>
         </aside>
         <main class="home__main">
+            <h1>Comics</h1>
             <div
                 :class="{
                     'comics-container': true,
@@ -59,15 +88,18 @@ export default {
             total: 0,
             fetching: true,
             curPage: 1,
+            creators: [],
             filters: {
                 start: '',
                 end: '',
+                creators: [],
             },
         };
     },
     components: { Pagination, Comic },
     mounted() {
         this.fetchComics();
+        this.fetchCreators();
     },
     watch: {
         $route: {
@@ -77,12 +109,26 @@ export default {
                     this.curPage = parseInt(this.$route.query.page);
                 }
 
-                if (this.$route.query.start !== this.filters.start) {
+                if (
+                    this.$route.query.start &&
+                    this.$route.query.start !== this.filters.start
+                ) {
                     this.filters.start = this.$route.query.start;
                 }
 
-                if (this.$route.query.end !== this.filters.end) {
+                if (
+                    this.$route.query.end &&
+                    this.$route.query.end !== this.filters.end
+                ) {
                     this.filters.end = this.$route.query.end;
+                }
+
+                if (
+                    this.$route.query.creators &&
+                    JSON.stringify(this.$route.query.creators) !==
+                        JSON.stringify(this.filters.creators)
+                ) {
+                    this.filters.creators = this.$route.query.creators;
                 }
 
                 this.fetchComics();
@@ -112,6 +158,24 @@ export default {
         },
     },
     methods: {
+        async fetchCreators() {
+            try {
+                const response = await axios(
+                    'https://gateway.marvel.com:443/v1/public/creators',
+                    {
+                        method: 'GET',
+                        params: {
+                            apikey: this.publicKey,
+                            limit: 50,
+                        },
+                    },
+                );
+
+                this.creators = response.data.data.results;
+            } catch (error) {
+                console.error(error);
+            }
+        },
         async fetchComics() {
             this.fetching = true;
 
@@ -124,6 +188,7 @@ export default {
                             apikey: this.publicKey,
                             offset: this.offset,
                             dateRange: this.dateRange,
+                            creators: this.filters.creators,
                         },
                     },
                 );
@@ -159,11 +224,13 @@ export default {
                 newFilters.end = this.filters.end;
             }
 
-            const curQuery = Object.assign({}, this.$route.query, newFilters);
+            if (this.filters.creators.length) {
+                newFilters.creators = this.filters.creators;
+            }
 
             this.$router.push({
                 path: this.$route.path,
-                query: curQuery,
+                query: newFilters,
             });
         },
     },
@@ -178,10 +245,10 @@ export default {
         left: 0;
         bottom: 0;
         width: 30%;
-        overflow-y: auto;
+        overflow-y: hidden;
         border-right: 2px solid goldenrod;
-        padding: 2rem 2rem 5rem;
-        input {
+        padding: 2rem 0 5rem;
+        input[type='date'] {
             width: 100%;
         }
     }
@@ -193,18 +260,35 @@ export default {
         bottom: 0;
         width: 70%;
         overflow-x: auto;
-        padding: 2rem;
+        padding: 2rem 2rem 1rem;
+        display: flex;
+        flex-direction: column;
     }
 
-    &__filter-submit {
-        position: absolute;
-        bottom: 1rem;
-        left: 2rem;
-        width: calc(100% - 4rem);
+    &__filter {
+        &-form {
+            width: 100%;
+            height: 100%;
+            padding: 0 2rem;
+            overflow-y: auto;
+        }
+        &-submit {
+            position: absolute;
+            bottom: 1rem;
+            left: 2rem;
+            width: calc(100% - 4rem);
+        }
+
+        &-creators {
+            margin-top: 1rem;
+            max-height: 10rem;
+            overflow: auto;
+        }
     }
 }
 
 .comics-container {
+    flex-grow: 1;
     min-height: 10rem;
     position: relative;
     &--loading {
