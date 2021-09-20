@@ -10,7 +10,13 @@
                     v-model="filters.start"
                 />
                 <label for="end">Tot:</label>
-                <input id="end" type="date" name="end" v-model="filters.end" />
+                <input
+                    id="end"
+                    type="date"
+                    name="end"
+                    v-model="filters.end"
+                    :max="today"
+                />
                 <button type="submit" class="home__filter-submit">
                     Filter
                 </button>
@@ -84,6 +90,9 @@ export default {
         },
     },
     computed: {
+        today() {
+            return new Date().toISOString().split('T')[0];
+        },
         totalPages() {
             return Math.ceil(this.total / this.limit);
         },
