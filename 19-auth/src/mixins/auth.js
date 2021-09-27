@@ -1,7 +1,9 @@
 import store from '@/store';
 
 export default {
-    beforeRouteEnter(to, from, next) {
+    async beforeRouteEnter(to, from, next) {
+        await store.dispatch('fetchUserData');
+
         if (!store.getters.isLoggedIn) {
             next('/login');
             return;
